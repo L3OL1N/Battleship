@@ -1,0 +1,23 @@
+{
+  "name": "Battleship",
+  "version": "1.0.0",
+  "description": "This is odin project TTD practice.",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/L3OL1N/Battleship.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/L3OL1N/Battleship/issues"
+  },
+  "homepage": "https://github.com/L3OL1N/Battleship#readme",
+  "dependencies": {
+    "jest": "^28.1.3"
+  }
+}
