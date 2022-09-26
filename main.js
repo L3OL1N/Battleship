@@ -2,32 +2,59 @@ class Ship{
     constructor(length){
         this.length = length;
         this.hitPos = new Array(length).fill(false);
+        this.sink = false;
     }
-    hit(num){
-        if(num <= this.length) this.hitPos[num-1] = true
+    hit(index){
+        if(index <= this.length){
+            this.hitPos[index] = true;
+            this.isSunk();
+        } 
     }
     isSunk(){
-        return this.hitPos.every(val=>val==true)? true:false;
+        if(this.hitPos.every(val=>val==true)){
+            this.sink = true;
+            return  true;
+        }
+        return false;
     }
 }
 class GameBoard{
     constructor(){
         this.board = generBoard();
+        this.ships = [];
     }
     shipSet(num,pos,dir){
         let ship = new Ship(num);
         let row = pos[0];
         let col = pos[1];
+        for(let i = 0; i < num; i++){
+            if(dir == "v" && this.board[row + i][col] != "") return console.log("can't set");
+            if(dir == "h" && this.board[row][col + i] != "") return console.log("can't set");
+        }
+        this.ships.push(ship);
         if(dir == "v"){
             for(let i = 0; i < num; i++){
-                this.board[row + i][col] = {"ship" : ship};
+                this.board[row + i][col] = {"ship" : ship,"index":i};
             }
         }
         if(dir == "h"){
             for(let i = 0; i < num; i++){
-                this.board[row][col+i] = {"ship" : ship};
+                this.board[row][col+i] = {"ship" : ship,"index":i};
             }
         }
+    }
+    receiveAttack(pos){
+        let row = pos[0];
+        let col = pos[1];
+        let boardPos = this.board[row][col];
+        if(boardPos.hit == true) return;
+        boardPos.hit = true;
+        if(boardPos.ship instanceof Ship){
+            boardPos.ship.hit(boardPos.index);
+        }
+    }
+    isAllSunk(){
+       return this.ships.every(ship=>ship.sink == true)? true:false;
     }
 }
 function generBoard(){

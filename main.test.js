@@ -15,12 +15,12 @@ describe("ship generate",()=>{
     test("ship hit 2",()=>{
         const ship = new Ship(5);
         ship.hit(2);
-        expect(ship.hitPos[1]).toBe(true);
+        expect(ship.hitPos[2]).toBe(true);
     })
     test("ship hit to sunk",()=>{
         const ship = new Ship(2);
+        ship.hit(0);
         ship.hit(1);
-        ship.hit(2);
         expect(ship.isSunk()).toBe(true);
     })
     test("ship hit no sunk",()=>{
@@ -31,23 +31,21 @@ describe("ship generate",()=>{
     })
 })
 describe("gameboard generate",()=>{
+    const gameboard = new GameBoard;
+    gameboard.shipSet(2,[0,0],"v");
+    gameboard.shipSet(2,[2,0],"h");
     test("board size",()=>{
-        const gameboard = new GameBoard;
         expect(gameboard.board.length).toBe(10)
         expect(gameboard.board[0].length).toBe(10)
     })
     test("board place ship vertical 2",()=>{
-        const gameboard = new GameBoard;
-        gameboard.shipSet(2,[0,0],"v");
         const ans0 = gameboard.board[0][0].ship instanceof Ship;
         const ans1 = gameboard.board[1][0].ship instanceof Ship;
         expect(ans0).toBe(true);
         expect(ans1).toBe(true);
     })
     test("board place ship vertical 2 hit",()=>{
-        const gameboard = new GameBoard;
-        gameboard.shipSet(2,[0,0],"v");
-        gameboard.board[0][0].ship.hit(1);
+        gameboard.board[0][0].ship.hit(0);
         const ans = gameboard.board[0][0].ship.hitPos;
         const ans1 = gameboard.board[1][0].ship.hitPos;
         expect(ans[0]).toBe(true);
@@ -55,11 +53,31 @@ describe("gameboard generate",()=>{
         expect(ans1[0]).toBe(true);
     })
     test("board place ship horizon 2",()=>{
-        const gameboard = new GameBoard;
-        gameboard.shipSet(2,[0,0],"h");
-        const ans0 = gameboard.board[0][0].ship instanceof Ship;
-        const ans1 = gameboard.board[0][1].ship instanceof Ship;
+        const ans0 = gameboard.board[2][0].ship instanceof Ship;
+        const ans1 = gameboard.board[2][1].ship instanceof Ship;
         expect(ans0).toBe(true);
         expect(ans1).toBe(true);
+    })
+    test("board receiveAttack ship hit",()=>{
+        gameboard.receiveAttack([2,0]);
+        const ans0 = gameboard.board[2][0].ship
+
+        expect(ans0.hitPos[0]).toBe(true)
+    })
+    test("board receiveAttack miss hit",()=>{
+        gameboard.receiveAttack([3,3]);
+        const ans0 = gameboard.board[3][3]
+
+        expect(ans0.hit).toBe(true)
+    })
+    test("board is all sunk false",()=>{
+        
+        expect(gameboard.isAllSunk()).toBe(false)
+    })
+    test("board is all sunk true",()=>{
+        gameboard.receiveAttack([1,0]);
+        gameboard.receiveAttack([2,1]);
+
+        expect(gameboard.isAllSunk()).toBe(true)
     })
 })
