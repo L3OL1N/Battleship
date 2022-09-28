@@ -1,11 +1,10 @@
-const {Ship,GameBoard} = require("./main");
+const {Ship,GameBoard,Player} = require("./main");
 
 const gameboard = new GameBoard;
 let board = gameboard.board;
-gameboard.shipSet(2,[0,0],"h");
-gameboard.shipSet(3,[0,1],"v");
-gameboard.receiveAttack([0,0])
-// board[0][0].ship.hit(1);
-// board[0][0].ship.isSunk();
+let player = new Player;
+player.autoAttack(gameboard);
+player.autoAttack(gameboard);
+player.autoAttack(gameboard);
 
-console.log(board[0][0])
+console.log(player.PChit);

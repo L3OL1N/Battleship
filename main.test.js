@@ -1,4 +1,4 @@
-const {Ship,GameBoard} = require("./main");
+const {Ship,GameBoard,Player} = require("./main");
 
 
 describe("ship generate",()=>{
@@ -79,5 +79,22 @@ describe("gameboard generate",()=>{
         gameboard.receiveAttack([2,1]);
 
         expect(gameboard.isAllSunk()).toBe(true)
+    })
+})
+describe("player generate",()=>{
+    const PCgameboard = new GameBoard;
+    const HUgameboard = new GameBoard;
+    PCgameboard.shipSet(2,[1,0],"h")
+    test("player hu attack",()=>{
+        const HuPlayer = new Player;
+
+        expect(HuPlayer.attack([0,0],PCgameboard)).toBe("miss")
+        expect(HuPlayer.attack([0,0],PCgameboard)).toBe("already attack")
+        expect(HuPlayer.attack([1,0],PCgameboard)).toBe("hit")
+    })
+    test("paler pc auto attack",()=>{
+        const PCplayer = new Player;
+
+        expect(PCplayer.autoAttack(HUgameboard)).toBe("miss" || "hit")
     })
 })

@@ -64,5 +64,31 @@ function generBoard(){
     }
     return arr;
 }
+class Player{
+    constructor(){
+        this.PChit = [];
+    }
+    attack(pos,board){
+        let boardPos = board.board[pos[0]][pos[1]];
+        if(boardPos.hit == true) return "already attack";
+        board.receiveAttack(pos)
+        if(boardPos.ship instanceof Ship){
+            return "hit"
+        }
+        return "miss";
+    }
+    autoAttack(board){
+        let rand = Math.floor(Math.random() * 1000) % 100;
+        while(this.PChit.includes(rand)){
+            rand++;
+        }
+        this.PChit.push(rand);
+        let row = Math.floor(rand / 10);
+        let col = (rand + 9) % 10;
+        let message = this.attack([row,col],board);
+        return message;
+    }
+}
 module.exports.Ship = Ship;
 module.exports.GameBoard = GameBoard;
+module.exports.Player = Player;
