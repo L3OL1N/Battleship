@@ -89,6 +89,31 @@ class Player{
         return message;
     }
 }
-module.exports.Ship = Ship;
-module.exports.GameBoard = GameBoard;
-module.exports.Player = Player;
+function game(){
+    const PCgameboard = new GameBoard;
+    const HUgameboard = new GameBoard;
+    const PCplayer = new Player;
+    const HuPlayer = new Player;
+    // board set
+    PCgameboard.shipSet(2,[0,0],"v");
+    HUgameboard.shipSet(2,[0,0],"v");
+    //game
+    while(!PCgameboard.isAllSunk() || !HUgameboard.isAllSunk()){
+        let row = prompt("enter row");
+        let col = prompt("enter col");
+        let Hupos = [row,col];
+        let message = HuPlayer.attack(Hupos,PCgameboard);
+        console.log("hu " + message);
+        if(PCgameboard.isAllSunk()) break;
+        message = PCplayer.autoAttack(HUgameboard);
+        console.log("pc " + message);
+    }
+    if(PCgameboard.isAllSunk()) console.log("Human win");
+    if(HUgameboard.isAllSunk()) console.log("PC win");
+    return;
+}
+game();
+// module.exports.Ship = Ship;
+// module.exports.GameBoard = GameBoard;
+// module.exports.Player = Player;
+// module.exports.game = game();
