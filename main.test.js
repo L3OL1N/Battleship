@@ -44,6 +44,10 @@ describe("gameboard generate",()=>{
         expect(ans0).toBe(true);
         expect(ans1).toBe(true);
     })
+    test("board place ship vertical 2 out board",()=>{
+        const ans0 = gameboard.shipSet(2,[9,0],"v")
+        expect(ans0).toBe("can't set");
+    })
     test("board place ship vertical 2 hit",()=>{
         gameboard.board[0][0].ship.hit(0);
         const ans = gameboard.board[0][0].ship.hitPos;
@@ -57,6 +61,10 @@ describe("gameboard generate",()=>{
         const ans1 = gameboard.board[2][1].ship instanceof Ship;
         expect(ans0).toBe(true);
         expect(ans1).toBe(true);
+    })
+    test("board place ship horizon 2 out board",()=>{
+        const ans0 = gameboard.shipSet(2,[0,9],"h")
+        expect(ans0).toBe("can't set");
     })
     test("board receiveAttack ship hit",()=>{
         gameboard.receiveAttack([2,0]);
@@ -91,6 +99,7 @@ describe("player generate",()=>{
         expect(HuPlayer.attack([0,0],PCgameboard)).toBe("miss")
         expect(HuPlayer.attack([0,0],PCgameboard)).toBe("already attack")
         expect(HuPlayer.attack([1,0],PCgameboard)).toBe("hit")
+        expect(HuPlayer.attack([0,1],PCgameboard)).toBe("miss")
     })
     test("paler pc auto attack",()=>{
         const PCplayer = new Player;

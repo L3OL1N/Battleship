@@ -28,8 +28,9 @@ class GameBoard{
         let row = pos[0];
         let col = pos[1];
         for(let i = 0; i < num; i++){
-            if(dir == "v" && this.board[row + i][col] != "") return console.log("can't set");
-            if(dir == "h" && this.board[row][col + i] != "") return console.log("can't set");
+            if(row + i > 9 || col + i > 9) return "can't set";
+            if(dir == "v" && this.board[row + i][col] != "") return "can't set";
+            if(dir == "h" && this.board[row][col + i] != "") return "can't set";
         }
         this.ships.push(ship);
         if(dir == "v"){
@@ -59,8 +60,12 @@ class GameBoard{
 }
 function generBoard(){
     let arr = [];
-    for(let i = 0; i <10; i++){
-        arr.push(new Array(10).fill([]))
+    for(let i = 0; i < 10; i++){
+        let arr2 = []
+        for(let j = 0; j < 10; j++){
+            arr2.push([])
+        }
+        arr.push(arr2);
     }
     return arr;
 }
@@ -85,6 +90,7 @@ class Player{
         this.PChit.push(rand);
         let row = Math.floor(rand / 10);
         let col = (rand + 9) % 10;
+        console.log("PC: " +[row,col]);
         let message = this.attack([row,col],board);
         return message;
     }
@@ -95,8 +101,8 @@ function game(){
     const PCplayer = new Player;
     const HuPlayer = new Player;
     // board set
-    PCgameboard.shipSet(2,[0,0],"v");
-    HUgameboard.shipSet(2,[0,0],"v");
+    boardSet(PCgameboard);
+    boardSet(HUgameboard);
     //game
     while(!PCgameboard.isAllSunk() || !HUgameboard.isAllSunk()){
         let row = prompt("enter row");
@@ -112,8 +118,29 @@ function game(){
     if(HUgameboard.isAllSunk()) console.log("PC win");
     return;
 }
+const typeOfShips = {
+    "Carrier":5,
+    "Battleship":4,
+    "Cruiser":3,
+    "Submarine":3,
+    "Destroyer":2
+}
+function boardSet(board){
+    let i = 0;
+    for(ship in typeOfShips){
+        while(!(board.ships[i] instanceof Ship)){
+            let rand = Math.floor(Math.random() * 1000) % 100;
+            let row = Math.floor(rand / 10);
+            let col = (rand + 9) % 10;
+            let num = typeOfShips[ship];
+            let pos = [row,col];
+            let dir = rand % 2 == 0? "v":"h";
+            board.shipSet(num,pos,dir);
+        }
+        i++;
+    }
+}
 game();
 // module.exports.Ship = Ship;
 // module.exports.GameBoard = GameBoard;
 // module.exports.Player = Player;
-// module.exports.game = game();
