@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  margin: 0 auto;
+  width: 80vw;
+}
+main #wrap {
+  padding: 10px;
+  height: 50%;
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
+  justify-content: center;
+  gap: 0;
+}
+main #wrap .create {
+  margin: 0 auto;
+  border: 1px solid black;
+  height: 50px;
+  width: 50px;
+}/*# sourceMappingURL=style.css.map */

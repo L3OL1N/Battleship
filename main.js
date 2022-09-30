@@ -140,7 +140,20 @@ function boardSet(board){
         i++;
     }
 }
-game();
+// game();
+const generGrid = function(){
+    let wrapDiv = document.getElementById("wrap");
+    let num = 10
+    let numPow = num*num;
+    for(let i =0; i < numPow; i++){
+        let newDiv = document.createElement("div");
+        // var textNode = document.createTextNode(i+1);
+        // newDiv.appendChild(textNode);
+        newDiv.dataset.item = i;
+        newDiv.classList.add("create");
+        wrapDiv.appendChild(newDiv);
+    }
+}();
 // module.exports.Ship = Ship;
 // module.exports.GameBoard = GameBoard;
 // module.exports.Player = Player;
