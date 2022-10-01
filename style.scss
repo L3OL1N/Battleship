@@ -1,3 +1,4 @@
+$boxSize: 50px;
 *{
     margin: 0;
     padding: 0;
@@ -9,8 +10,8 @@ main{
         padding: 10px;
         height: 50%;
         display: grid;
-        grid-template-columns: repeat(10,50px);
-        grid-template-rows: repeat(10,50px);
+        grid-template-columns: repeat(10,$boxSize);
+        grid-template-rows: repeat(10,$boxSize);
         justify-content: center;
         gap:0;
         .create{
@@ -18,7 +19,9 @@ main{
             border: 1px solid black;
             height: 50px;
             width: 50px;
-            
+            text-align: center;
+            line-height: $boxSize;
+            font-size: 24px;
         }
     }
 

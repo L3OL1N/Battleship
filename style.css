@@ -21,4 +21,7 @@ main #wrap .create {
   border: 1px solid black;
   height: 50px;
   width: 50px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 24px;
 }/*# sourceMappingURL=style.css.map */

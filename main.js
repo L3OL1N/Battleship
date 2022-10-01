@@ -88,36 +88,14 @@ class Player{
             rand++;
         }
         this.PChit.push(rand);
-        let row = Math.floor(rand / 10);
+        let row = Math.floor((rand-1) / 10);
         let col = (rand + 9) % 10;
         console.log("PC: " +[row,col]);
         let message = this.attack([row,col],board);
         return message;
     }
 }
-function game(){
-    const PCgameboard = new GameBoard;
-    const HUgameboard = new GameBoard;
-    const PCplayer = new Player;
-    const HuPlayer = new Player;
-    // board set
-    boardSet(PCgameboard);
-    boardSet(HUgameboard);
-    //game
-    while(!PCgameboard.isAllSunk() || !HUgameboard.isAllSunk()){
-        let row = prompt("enter row");
-        let col = prompt("enter col");
-        let Hupos = [row,col];
-        let message = HuPlayer.attack(Hupos,PCgameboard);
-        console.log("hu " + message);
-        if(PCgameboard.isAllSunk()) break;
-        message = PCplayer.autoAttack(HUgameboard);
-        console.log("pc " + message);
-    }
-    if(PCgameboard.isAllSunk()) console.log("Human win");
-    if(HUgameboard.isAllSunk()) console.log("PC win");
-    return;
-}
+
 const typeOfShips = {
     "Carrier":5,
     "Battleship":4,
@@ -140,9 +118,11 @@ function boardSet(board){
         i++;
     }
 }
-// game();
+
+//html
+let wrapDiv = document.getElementById("wrap");
+let clickPos;
 const generGrid = function(){
-    let wrapDiv = document.getElementById("wrap");
     let num = 10
     let numPow = num*num;
     for(let i =0; i < numPow; i++){
@@ -154,6 +134,52 @@ const generGrid = function(){
         wrapDiv.appendChild(newDiv);
     }
 }();
+for(let i = 0; i < wrapDiv.children.length; i++){
+    wrapDiv.children[i].addEventListener("click",game,{once:true});
+}
+function divStyle(e,message){
+    let target = e.target;
+    if(message == "hit"){
+        target.innerHTML = "O";
+        target.style.color = "red";
+    } 
+    if(message == "miss"){
+        target.innerHTML = "X";
+    } 
+}
+
+//game
+const PCgameboard = new GameBoard;
+const HUgameboard = new GameBoard;
+const PCplayer = new Player;
+const HuPlayer = new Player;
+function game(e){
+    let item = e.target.dataset.item;
+    // board set
+    boardSet(PCgameboard);
+    boardSet(HUgameboard);
+    //game
+    let selectPos = Number.parseInt(item,10) + 1;
+    let row = Math.floor((selectPos-1) / 10);
+    let col = (selectPos + 9) % 10;
+    let Hupos = [row,col];
+    console.log(Hupos)
+    let message = HuPlayer.attack(Hupos,PCgameboard);
+    divStyle(e,message);
+    console.log("hu " + message);
+    if(PCgameboard.isAllSunk()){
+        console.log("Human win");
+        return;
+    }
+    message = PCplayer.autoAttack(HUgameboard);
+    console.log(PCplayer.PChit)
+    console.log("pc " + message);
+    //end
+    if(HUgameboard.isAllSunk()){
+        console.log("PC win");
+        return;
+    } 
+}
 // module.exports.Ship = Ship;
 // module.exports.GameBoard = GameBoard;
 // module.exports.Player = Player;
