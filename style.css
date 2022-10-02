@@ -8,8 +8,29 @@ main {
   width: 80vw;
   position: relative;
 }
-main #wrap {
+main #side {
+  position: absolute;
+  top: 0%;
+  left: 7%;
   padding: 10px;
+  height: 50%;
+  display: grid;
+  grid-template-columns: repeat(10, 20px);
+  grid-template-rows: repeat(10, 20px);
+  justify-content: center;
+  gap: 0;
+}
+main #side .Hu {
+  margin: 0 auto;
+  border: 1px solid black;
+  height: 20px;
+  width: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 10px;
+}
+main #wrap {
+  padding: 50px;
   height: 50%;
   display: grid;
   grid-template-columns: repeat(10, 50px);
@@ -17,7 +38,7 @@ main #wrap {
   justify-content: center;
   gap: 0;
 }
-main #wrap .create {
+main #wrap .Pc {
   margin: 0 auto;
   border: 1px solid black;
   height: 50px;
@@ -26,12 +47,18 @@ main #wrap .create {
   line-height: 50px;
   font-size: 24px;
 }
+main button#start {
+  position: absolute;
+  padding: 5px 10px;
+  top: 50%;
+  left: 15%;
+}
 main #cover {
   display: none;
   height: 515px;
   width: 515px;
   position: absolute;
-  top: 4px;
+  top: 38px;
   left: 26.5%;
   background: #000;
   opacity: 25%;
@@ -40,7 +67,7 @@ main h2#winner {
   width: 500px;
   display: none;
   position: absolute;
-  top: -5%;
+  top: 2%;
   left: 27%;
   font-size: 85px;
   text-align: center;

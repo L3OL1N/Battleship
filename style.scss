@@ -1,4 +1,5 @@
 $boxSize: 50px;
+$smallBoxSize: 20px;
 *{
     margin: 0;
     padding: 0;
@@ -7,30 +8,57 @@ main{
     margin: 0 auto;
     width: 80vw;
     position: relative;
-    #wrap{
+    #side{
+        position: absolute;
+        top: 0%;
+        left: 7%;
         padding: 10px;
+        height: 50%;
+        display: grid;
+        grid-template-columns: repeat(10,$smallBoxSize);
+        grid-template-rows: repeat(10,$smallBoxSize);
+        justify-content: center;
+        gap:0;
+        .Hu{
+            margin: 0 auto;
+            border: 1px solid black;
+            height: $smallBoxSize;
+            width: $smallBoxSize;
+            text-align: center;
+            line-height: $smallBoxSize;
+            font-size: 10px;
+        }
+    }
+    #wrap{
+        padding: 50px;
         height: 50%;
         display: grid;
         grid-template-columns: repeat(10,$boxSize);
         grid-template-rows: repeat(10,$boxSize);
         justify-content: center;
         gap:0;
-        .create{
+        .Pc{
             margin: 0 auto;
             border: 1px solid black;
-            height: 50px;
-            width: 50px;
+            height: $boxSize;
+            width: $boxSize;
             text-align: center;
             line-height: $boxSize;
             font-size: 24px;
         }
+    }
+    button#start{
+        position: absolute;
+        padding:5px 10px;
+        top: 50%;
+        left: 15%;
     }
     #cover{
         display: none;
         height: $boxSize * 10.3;
         width: $boxSize * 10.3;
         position: absolute;
-        top: 4px;
+        top: 38px;
         left: 26.5%;
         background: #000;
         opacity: 25%;
@@ -39,7 +67,7 @@ main{
         width: $boxSize * 10;
         display: none;
         position: absolute;
-        top: -5%;
+        top: 2%;
         left: 27%;
         font-size: 85px;
         text-align: center;
