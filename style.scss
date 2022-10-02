@@ -6,6 +6,7 @@ $boxSize: 50px;
 main{
     margin: 0 auto;
     width: 80vw;
+    position: relative;
     #wrap{
         padding: 10px;
         height: 50%;
@@ -24,5 +25,26 @@ main{
             font-size: 24px;
         }
     }
-
+    #cover{
+        display: none;
+        height: $boxSize * 10.3;
+        width: $boxSize * 10.3;
+        position: absolute;
+        top: 4px;
+        left: 26.5%;
+        background: #000;
+        opacity: 25%;
+    }
+    h2#winner{
+        width: $boxSize * 10;
+        display: none;
+        position: absolute;
+        top: -5%;
+        left: 27%;
+        font-size: 85px;
+        text-align: center;
+        line-height: $boxSize * 10.3;
+        color: red;
+        opacity: 1;
+    }
 }

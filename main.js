@@ -88,6 +88,7 @@ class Player{
             rand++;
         }
         this.PChit.push(rand);
+        console.log(this.PChit);
         let row = Math.floor((rand-1) / 10);
         let col = (rand + 9) % 10;
         console.log("PC: " +[row,col]);
@@ -95,7 +96,6 @@ class Player{
         return message;
     }
 }
-
 const typeOfShips = {
     "Carrier":5,
     "Battleship":4,
@@ -121,6 +121,8 @@ function boardSet(board){
 
 //html
 let wrapDiv = document.getElementById("wrap");
+let winnerDiv = document.getElementById("winner");
+let coverDiv = document.getElementById("cover");
 let clickPos;
 const generGrid = function(){
     let num = 10
@@ -163,20 +165,24 @@ function game(e){
     let row = Math.floor((selectPos-1) / 10);
     let col = (selectPos + 9) % 10;
     let Hupos = [row,col];
-    console.log(Hupos)
     let message = HuPlayer.attack(Hupos,PCgameboard);
     divStyle(e,message);
     console.log("hu " + message);
     if(PCgameboard.isAllSunk()){
         console.log("Human win");
+        winnerDiv.innerHTML = "Human win !!";
+        coverDiv.style.display = "block";
+        winnerDiv.style.display = "block";
         return;
     }
     message = PCplayer.autoAttack(HUgameboard);
-    console.log(PCplayer.PChit)
     console.log("pc " + message);
     //end
     if(HUgameboard.isAllSunk()){
         console.log("PC win");
+        winnerDiv.innerHTML = "PC win !!";
+        coverDiv.style.display = "block";
+        winnerDiv.style.display = "block";
         return;
     } 
 }

@@ -6,6 +6,7 @@
 main {
   margin: 0 auto;
   width: 80vw;
+  position: relative;
 }
 main #wrap {
   padding: 10px;
@@ -24,4 +25,26 @@ main #wrap .create {
   text-align: center;
   line-height: 50px;
   font-size: 24px;
+}
+main #cover {
+  display: none;
+  height: 515px;
+  width: 515px;
+  position: absolute;
+  top: 4px;
+  left: 26.5%;
+  background: #000;
+  opacity: 25%;
+}
+main h2#winner {
+  width: 500px;
+  display: none;
+  position: absolute;
+  top: -5%;
+  left: 27%;
+  font-size: 85px;
+  text-align: center;
+  line-height: 515px;
+  color: red;
+  opacity: 1;
 }/*# sourceMappingURL=style.css.map */
