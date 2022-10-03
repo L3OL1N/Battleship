@@ -53,8 +53,13 @@ main{
         top: 50%;
         left: 15%;
     }
+    button#restart{
+        position: absolute;
+        padding:5px 10px;
+        top: 55%;
+        left: 15%;
+    }
     #cover{
-        display: none;
         height: $boxSize * 10.3;
         width: $boxSize * 10.3;
         position: absolute;

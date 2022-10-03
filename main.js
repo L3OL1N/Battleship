@@ -74,6 +74,8 @@ function generBoard(){
 class Player{
     constructor(){
         this.PChit = [];
+        this.queue = [];
+        this.AI = true;
     }
     attack(pos,board){
         let boardPos = board.board[pos[0]][pos[1]];
@@ -85,15 +87,21 @@ class Player{
         return "miss";
     }
     autoAttack(board){
-        let rand = Math.floor(Math.random() * 1000) % 100 + 1;
-        while(this.PChit.includes(rand)){
+        let rand = Math.floor(Math.random() * 1000) % 100 ;
+        while(this.PChit.includes(rand) || rand > 99){
             rand++;
         }
+        if(this.AI && this.queue.length != 0){
+            rand = this.queue.shift();
+        }
         this.PChit.push(rand);
-        let row = Math.floor((rand-1) / 10);
+        console.log(this.PChit)
+        let row = Math.floor((rand) / 10);
         let col = rand % 10;
         console.log("PC: " +[row,col]);
         let message = this.attack([row,col],board);
+        if(message == "hit") aiMove(this.queue,this.PChit,rand);
+        console.log(this.queue);
         return message;
     }
 }
@@ -119,13 +127,25 @@ function boardSet(board){
         i++;
     }
 }
+function aiMove(queue,PChit,rand){
+    for(let i = 0; i < 4; i++){
+        let next = rand;
+        //           U / D / L / R
+        let nextSet = [-10,10,-1,1]
+        next = next + nextSet[i];
+        if(!PChit.includes(next) && next < 100 && next >= 0){
+            queue.push(next);
+        }
+    }
+}
 
 //html
 let wrapDiv = document.getElementById("wrap");
 let sideDiv = document.getElementById("side");
 let winnerDiv = document.getElementById("winner");
 let coverDiv = document.getElementById("cover");
-let startButton = document.getElementById("start");
+let startBtn = document.getElementById("start");
+let restartBtn = document.getElementById("restart");
 let clickPos;
 const generGrid = function(){
     let num = 10
@@ -146,7 +166,7 @@ const generGrid = function(){
 for(let i = 0; i < wrapDiv.children.length; i++){
     wrapDiv.children[i].addEventListener("click",game,{once:true});
 }
-startButton.addEventListener("click",gameset);
+startBtn.addEventListener("click",gameset);
 function PCdivStyle(e,message){
     let target = e.target;
     if(message == "hit"){
@@ -170,6 +190,7 @@ function HudivStyle(board,message = "",count,player){
     }
     else{
         let num = player.PChit[count];
+        console.log("num"+num);
         if(message == "hit"){
             sideDiv.children[num].innerHTML = "O";
             sideDiv.children[num].style.color = "red";
@@ -191,6 +212,7 @@ function gameset(e){
     boardSet(PCgameboard);
     boardSet(HUgameboard);
     HudivStyle(HUgameboard);
+    coverDiv.style.display = "none";
 }
 function game(e){
     let item = e.target.dataset.item;
@@ -210,8 +232,8 @@ function game(e){
         return;
     }
     message = PCplayer.autoAttack(HUgameboard);
-    HudivStyle(HUgameboard,message,count,PCplayer);
     console.log("pc " + message);
+    HudivStyle(HUgameboard,message,count,PCplayer);
     //end
     if(HUgameboard.isAllSunk()){
         console.log("PC win");
@@ -222,6 +244,11 @@ function game(e){
     } 
     count++;
 }
+//restart button
+restartBtn.addEventListener("click",function(){
+    window.location.reload();
+    return false;
+});
 // module.exports.Ship = Ship;
 // module.exports.GameBoard = GameBoard;
 // module.exports.Player = Player;

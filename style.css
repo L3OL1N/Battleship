@@ -53,8 +53,13 @@ main button#start {
   top: 50%;
   left: 15%;
 }
+main button#restart {
+  position: absolute;
+  padding: 5px 10px;
+  top: 55%;
+  left: 15%;
+}
 main #cover {
-  display: none;
   height: 515px;
   width: 515px;
   position: absolute;
